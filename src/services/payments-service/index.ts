@@ -1,7 +1,41 @@
-import { notFoundError, unauthorizedError } from "@/errors";
-import paymentRepository, { PaymentParams } from "@/repositories/payment-repository";
-import ticketRepository from "@/repositories/ticket-repository";
-import enrollmentRepository from "@/repositories/enrollment-repository";
+import { notFoundError, unauthorizedError, requestError } from '@/errors';
+import paymentRepository, { PaymentParams } from '@/repositories/payment-repository';
+import ticketRepository from '@/repositories/ticket-repository';
+import enrollmentRepository from '@/repositories/enrollment-repository';
+import { Stripe } from 'stripe';
+
+export async function paymentStripe() {
+  try {
+    const stripe = new Stripe(
+      'sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX',
+      { apiVersion: '2022-11-15' },
+    );
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'brl',
+            product_data: {
+              name: 'SITE DO OSCAR',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
+    });
+    if (session.url) {
+      return session.url;
+    } else {
+      return requestError(500, 'STRIPE ERROR');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function verifyTicketAndEnrollment(ticketId: number, userId: number) {
   const ticket = await ticketRepository.findTickeyById(ticketId);
@@ -47,16 +81,17 @@ async function paymentProcess(ticketId: number, userId: number, cardData: CardPa
 }
 
 export type CardPaymentParams = {
-  issuer: string,
-  number: number,
-  name: string,
-  expirationDate: Date,
-  cvv: number
-}
+  issuer: string;
+  number: number;
+  name: string;
+  expirationDate: Date;
+  cvv: number;
+};
 
 const paymentService = {
   getPaymentByTicketId,
   paymentProcess,
+  paymentStripe,
 };
 
 export default paymentService;
