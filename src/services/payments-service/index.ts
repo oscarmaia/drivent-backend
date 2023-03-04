@@ -24,10 +24,15 @@ export async function paymentStripe() {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: 'http://localhost:3000/dashboard/payment',
+      cancel_url: 'http://localhost:3000/dashboard/payment',
     });
+    const payment_intent = await stripe.checkout.sessions.retrieve(
+      'cs_test_a1QF6m1KUgb4pzbq1P5dxgsAhjnYFIvaZKmK1k1BWVq6fkWfqL22zb0nU6',
+      { expand: ['payment_intent.payment_method.card.last4'] },
+    );
     if (session.url) {
+      console.log(payment_intent);
       return session.url;
     } else {
       return requestError(500, 'STRIPE ERROR');
