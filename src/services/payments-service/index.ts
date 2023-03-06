@@ -3,9 +3,14 @@ import paymentRepository, { PaymentParams } from '@/repositories/payment-reposit
 import ticketRepository from '@/repositories/ticket-repository';
 import enrollmentRepository from '@/repositories/enrollment-repository';
 import { Stripe } from 'stripe';
+import ticketService from '../tickets-service';
 
-export async function paymentStripe() {
+export async function paymentStripe(userId: number) {
   try {
+    const ticket = await ticketService.getTicketByUserId(userId);
+    if (!ticket) {
+      throw notFoundError();
+    }
     const stripe = new Stripe(
       'sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX',
       { apiVersion: '2022-11-15' },
@@ -16,9 +21,9 @@ export async function paymentStripe() {
           price_data: {
             currency: 'brl',
             product_data: {
-              name: 'SITE DO OSCAR',
+              name: ticket.TicketType.name,
             },
-            unit_amount: 2000,
+            unit_amount: ticket.TicketType.price,
           },
           quantity: 1,
         },
@@ -27,12 +32,7 @@ export async function paymentStripe() {
       success_url: 'http://localhost:3000/dashboard/payment',
       cancel_url: 'http://localhost:3000/dashboard/payment',
     });
-    const payment_intent = await stripe.checkout.sessions.retrieve(
-      'cs_test_a1QF6m1KUgb4pzbq1P5dxgsAhjnYFIvaZKmK1k1BWVq6fkWfqL22zb0nU6',
-      { expand: ['payment_intent.payment_method.card.last4'] },
-    );
     if (session.url) {
-      console.log(payment_intent);
       return session.url;
     } else {
       return requestError(500, 'STRIPE ERROR');
