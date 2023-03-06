@@ -5,7 +5,7 @@ import httpStatus from 'http-status';
 
 export async function paymentStripe(req: AuthenticatedRequest, res: Response) {
   try {
-    const sessionUrl = await paymentService.paymentStripe();
+    const sessionUrl = await paymentService.paymentStripe(req.userId);
     res.send(sessionUrl).status(200);
   } catch (error) {
     if (error.name === 'RequestError') {

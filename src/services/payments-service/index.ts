@@ -3,9 +3,14 @@ import paymentRepository, { PaymentParams } from '@/repositories/payment-reposit
 import ticketRepository from '@/repositories/ticket-repository';
 import enrollmentRepository from '@/repositories/enrollment-repository';
 import { Stripe } from 'stripe';
+import ticketService from '../tickets-service';
 
-export async function paymentStripe() {
+export async function paymentStripe(userId: number) {
   try {
+    const ticket = await ticketService.getTicketByUserId(userId);
+    if (!ticket) {
+      throw notFoundError();
+    }
     const stripe = new Stripe(
       'sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX',
       { apiVersion: '2022-11-15' },
@@ -16,9 +21,9 @@ export async function paymentStripe() {
           price_data: {
             currency: 'brl',
             product_data: {
-              name: 'SITE DO OSCAR',
+              name: ticket.TicketType.name,
             },
-            unit_amount: 2000,
+            unit_amount: ticket.TicketType.price,
           },
           quantity: 1,
         },
