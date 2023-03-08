@@ -15,9 +15,10 @@ async function main() {
       },
     });
   }
+  let createdTicketTypes;
   let ticketTypes = await prisma.ticketType.findFirst();
   if (!ticketTypes) {
-    const createdTicketTypes = await prisma.ticketType.createMany({
+    createdTicketTypes = await prisma.ticketType.createMany({
       data: [
         { name: 'Online', price: 10000, includesHotel: false, isRemote: true },
         { name: 'Presencial', price: 60000, includesHotel: true, isRemote: false },
@@ -32,6 +33,7 @@ async function main() {
   }
 
   console.log({ event });
+  console.log({ createdTicketTypes });
 }
 
 main()
