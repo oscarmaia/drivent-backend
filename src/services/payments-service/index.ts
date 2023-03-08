@@ -11,10 +11,7 @@ export async function paymentStripe(userId: number) {
     if (!ticket) {
       throw notFoundError();
     }
-    const stripe = new Stripe(
-      'sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX',
-      { apiVersion: '2022-11-15' },
-    );
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
 
     const customer = await stripe.customers.create({
       metadata: {
