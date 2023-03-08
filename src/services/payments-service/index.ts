@@ -11,10 +11,14 @@ export async function paymentStripe(userId: number) {
     if (!ticket) {
       throw notFoundError();
     }
-    const stripe = new Stripe(
-      "sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX",
-      { apiVersion: "2022-11-15" },
-    );
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
+
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: userId,
+      },
+    });
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -28,9 +32,10 @@ export async function paymentStripe(userId: number) {
           quantity: 1,
         },
       ],
-      mode: "payment",
-      success_url: "http://localhost:3000/dashboard/payment",
-      cancel_url: "http://localhost:3000/dashboard/payment",
+      customer: customer.id,
+      mode: 'payment',
+      success_url: 'http://localhost:3000/dashboard/payment',
+      cancel_url: 'http://localhost:3000/dashboard/payment',
     });
     if (session.url) {
       return session.url;
