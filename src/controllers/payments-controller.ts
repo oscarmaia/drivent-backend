@@ -1,14 +1,14 @@
-import { AuthenticatedRequest } from '@/middlewares';
-import paymentService from '@/services/payments-service';
-import { Response } from 'express';
-import httpStatus from 'http-status';
+import { AuthenticatedRequest } from "@/middlewares";
+import paymentService from "@/services/payments-service";
+import { Response } from "express";
+import httpStatus from "http-status";
 
 export async function paymentStripe(req: AuthenticatedRequest, res: Response) {
   try {
     const sessionUrl = await paymentService.paymentStripe(req.userId);
     res.send(sessionUrl).status(200);
   } catch (error) {
-    if (error.name === 'RequestError') {
+    if (error.name === "RequestError") {
       res.sendStatus(500);
     }
   }
@@ -29,7 +29,7 @@ export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Respo
     }
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
-    if (error.name === 'UnauthorizedError') {
+    if (error.name === "UnauthorizedError") {
       return res.sendStatus(httpStatus.UNAUTHORIZED);
     }
     return res.sendStatus(httpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
 
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
-    if (error.name === 'UnauthorizedError') {
+    if (error.name === "UnauthorizedError") {
       return res.sendStatus(httpStatus.UNAUTHORIZED);
     }
     return res.sendStatus(httpStatus.NOT_FOUND);

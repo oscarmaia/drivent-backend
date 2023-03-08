@@ -1,9 +1,9 @@
-import { notFoundError, unauthorizedError, requestError } from '@/errors';
-import paymentRepository, { PaymentParams } from '@/repositories/payment-repository';
-import ticketRepository from '@/repositories/ticket-repository';
-import enrollmentRepository from '@/repositories/enrollment-repository';
-import { Stripe } from 'stripe';
-import ticketService from '../tickets-service';
+import { notFoundError, unauthorizedError, requestError } from "@/errors";
+import paymentRepository, { PaymentParams } from "@/repositories/payment-repository";
+import ticketRepository from "@/repositories/ticket-repository";
+import enrollmentRepository from "@/repositories/enrollment-repository";
+import { Stripe } from "stripe";
+import ticketService from "../tickets-service";
 
 export async function paymentStripe(userId: number) {
   try {
@@ -12,14 +12,14 @@ export async function paymentStripe(userId: number) {
       throw notFoundError();
     }
     const stripe = new Stripe(
-      'sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX',
-      { apiVersion: '2022-11-15' },
+      "sk_test_51MgWxFISQEBLnJ28cwCnvr9IvtNuakYaBnWBdnvIBIZDbTlEAuWQ6HadTy14h6yrl9qhzgB7SmDpQnLDw3mmKtvc00PargztcX",
+      { apiVersion: "2022-11-15" },
     );
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           price_data: {
-            currency: 'brl',
+            currency: "brl",
             product_data: {
               name: ticket.TicketType.name,
             },
@@ -28,14 +28,14 @@ export async function paymentStripe(userId: number) {
           quantity: 1,
         },
       ],
-      mode: 'payment',
-      success_url: 'http://localhost:3000/dashboard/payment',
-      cancel_url: 'http://localhost:3000/dashboard/payment',
+      mode: "payment",
+      success_url: "http://localhost:3000/dashboard/payment",
+      cancel_url: "http://localhost:3000/dashboard/payment",
     });
     if (session.url) {
       return session.url;
     } else {
-      return requestError(500, 'STRIPE ERROR');
+      return requestError(500, "STRIPE ERROR");
     }
   } catch (error) {
     console.log(error);
