@@ -23,7 +23,7 @@ import {
 const app = express();
 app
   .use(cors())
-  .use('/webhook', webhookRouter)
+  .use('/webhook', express.raw({ type: 'application/json' }), webhookRouter)
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/users', usersRouter)
