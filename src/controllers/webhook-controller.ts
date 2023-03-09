@@ -8,9 +8,7 @@ import paymentService, { CardPaymentParams } from '@/services/payments-service';
 import getRawBody from 'raw-body';
 export async function webhook(req: AuthenticatedRequest, res: Response) {
   console.log('inside webhook');
-  const raw = Buffer.from(JSON.stringify(req.body), 'base64').toString('utf8');
   const rawBody = await getRawBody(req);
-  console.log(raw)
   console.log('-----------------------------------------------------')
   console.log(rawBody)
   interface PaymentIntent {
