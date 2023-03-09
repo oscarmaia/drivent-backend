@@ -37,6 +37,9 @@
   "author": "Alexandre Nunes",
   "license": "ISC",
   "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "dev:prisma": {
     "seed": "npm run dev:load-envs -- ts-node prisma/seed.ts"
   },
   "devDependencies": {
