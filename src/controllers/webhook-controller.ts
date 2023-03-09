@@ -5,8 +5,11 @@ import { Stripe } from 'stripe';
 import express from 'express';
 import ticketService from '@/services/tickets-service';
 import paymentService, { CardPaymentParams } from '@/services/payments-service';
+import bodyParser from 'body-parser';
+
 export async function webhook(req: AuthenticatedRequest, res: Response) {
-  console.log('inside webhook')
+  console.log('inside webhook');
+  const raw = Buffer.from(JSON.stringify(req.body), 'base64').toString('utf8');
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -20,7 +23,6 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
     metadata: { userId: number };
   }
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  express.raw({ type: 'application/json' });
   const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
   const sig = req.headers['stripe-signature'];
@@ -28,7 +30,7 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   let event;
   let paymentIntent;
   try {
-    console.log('inside try/catch')
+    console.log('inside try/catch');
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
@@ -52,19 +54,19 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
         number: 4242424242424242,
       } as CardPaymentParams;
       await paymentService.paymentProcess(ticket.id, userId, cardPayment);
-      console.log('charge succeeded')
+      console.log('charge succeeded');
       break;
 
     case 'checkout.session.completed':
-      console.log('checkout session completed')
+      console.log('checkout session completed');
       break;
 
     case 'payment_intent.succeeded':
-      console.log('payment intent succeeded')
+      console.log('payment intent succeeded');
       break;
 
     case 'payment_intent.created':
-      console.log('payment intent created')
+      console.log('payment intent created');
       break;
 
     default:
