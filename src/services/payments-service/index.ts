@@ -34,8 +34,8 @@ export async function paymentStripe(userId: number) {
       ],
       customer: customer.id,
       mode: 'payment',
-      success_url: 'http://localhost:3000/dashboard/payment',
-      cancel_url: 'http://localhost:3000/dashboard/payment',
+      success_url: `${process.env.CLIENT_URL}/dashboard/payment`,
+      cancel_url: `${process.env.CLIENT_URL}/dashboard/payment`,
     });
     if (session.url) {
       return session.url;

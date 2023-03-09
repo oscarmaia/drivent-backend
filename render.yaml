@@ -1,6 +1,0 @@
-services:
-  - name: drivent_api
-    env:
-      NODE_ENV: production
-    buildCommand: npm run build
-    startCommand: node dist/server.js
