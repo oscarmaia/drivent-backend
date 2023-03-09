@@ -27,6 +27,11 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
   const sig = req.headers['stripe-signature'];
+  console.log('SIGNATURE');
+  console.log(sig);
+
+  console.log('SECRET KEY');
+  console.log(endpointSecret);
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15', typescript: true });
   let event;
   let paymentIntent;

@@ -27,9 +27,9 @@ app
   .use(
     '/webhook',
     async (req, res, next) => {
-      console.log('dentro do app.use')
+      console.log('dentro do app.use');
       const rawBody = await getRawBody(req);
-      res.locals.raw = rawBody
+      res.locals.raw = rawBody;
       next();
     },
     webhookRouter,
