@@ -31,7 +31,7 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   let paymentIntent;
   try {
     console.log('inside try/catch');
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(raw, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
     console.log(`Webhook Error: ${err.message}`);
