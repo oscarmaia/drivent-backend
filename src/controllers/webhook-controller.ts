@@ -5,11 +5,14 @@ import { Stripe } from 'stripe';
 import express from 'express';
 import ticketService from '@/services/tickets-service';
 import paymentService, { CardPaymentParams } from '@/services/payments-service';
-import bodyParser from 'body-parser';
-
+import getRawBody from 'raw-body';
 export async function webhook(req: AuthenticatedRequest, res: Response) {
   console.log('inside webhook');
   const raw = Buffer.from(JSON.stringify(req.body), 'base64').toString('utf8');
+  const rawBody = await getRawBody(req);
+  console.log(raw)
+  console.log('-----------------------------------------------------')
+  console.log(rawBody)
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -31,7 +34,7 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   let paymentIntent;
   try {
     console.log('inside try/catch');
-    event = stripe.webhooks.constructEvent(raw, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
     console.log(`Webhook Error: ${err.message}`);
