@@ -4,6 +4,9 @@ import { webhook } from '@/controllers';
 import express from 'express';
 const webhookRouter = Router();
 
-webhookRouter.post('/', webhook);
+webhookRouter.post('/',(req,res,next)=>{
+console.log("webhook route")
+next()
+}, webhook);
 
 export { webhookRouter };
