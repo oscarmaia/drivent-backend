@@ -1,15 +1,9 @@
 import { AuthenticatedRequest } from '@/middlewares';
 import { Response } from 'express';
-import httpStatus from 'http-status';
 import { Stripe } from 'stripe';
-import express from 'express';
 import ticketService from '@/services/tickets-service';
 import paymentService, { CardPaymentParams } from '@/services/payments-service';
-import bodyParser from 'body-parser';
-
 export async function webhook(req: AuthenticatedRequest, res: Response) {
-  console.log('inside webhook');
-  const raw = Buffer.from(JSON.stringify(req.body), 'base64').toString('utf8');
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -24,14 +18,13 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   }
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
   const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
-
   const sig = req.headers['stripe-signature'];
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15', typescript: true });
   let event;
   let paymentIntent;
+
   try {
-    console.log('inside try/catch');
-    event = stripe.webhooks.constructEvent(raw, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
     console.log(`Webhook Error: ${err.message}`);
