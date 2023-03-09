@@ -6,7 +6,6 @@ export function handleApplicationErrors(
   err: ApplicationError | Error,
   _req: Request,
   res: Response,
-  next: NextFunction,
 ) {
   if (err.name === 'CannotEnrollBeforeStartDateError') {
     return res.status(httpStatus.BAD_REQUEST).send({
@@ -44,6 +43,4 @@ export function handleApplicationErrors(
     error: 'InternalServerError',
     message: 'Internal Server Error',
   });
-
-  next();
 }

@@ -8,9 +8,9 @@ import paymentService, { CardPaymentParams } from '@/services/payments-service';
 import getRawBody from 'raw-body';
 export async function webhook(req: AuthenticatedRequest, res: Response) {
   console.log('inside webhook');
-  const rawBody = await getRawBody(req);
-  console.log('-----------------------------------------------------')
-  console.log(rawBody)
+  const rawBody = res.locals.raw;
+  console.log('-----------------------------------------------------');
+  console.log(rawBody);
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -30,6 +30,7 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15', typescript: true });
   let event;
   let paymentIntent;
+
   try {
     console.log('inside try/catch');
     event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
