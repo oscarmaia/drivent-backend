@@ -20,20 +20,12 @@ import {
   webhookRouter,
 } from '@/routers';
 import getRawBody from 'raw-body';
+import bodyParser from 'body-parser';
 
 const app = express();
 app
   .use(cors())
-  .use(
-    '/webhook',
-    async (req, res, next) => {
-      console.log('dentro do app.use');
-      const rawBody = await getRawBody(req);
-      res.locals.raw = rawBody;
-      next();
-    },
-    webhookRouter,
-  )
+  .use('/webhook', bodyParser.raw({ type: 'application/json' }), webhookRouter)
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/users', usersRouter)
