@@ -19,13 +19,11 @@ import {
   bookingRouter,
   webhookRouter,
 } from '@/routers';
-import getRawBody from 'raw-body';
-import bodyParser from 'body-parser';
 
 const app = express();
 app
   .use(cors())
-  .use('/webhook', bodyParser.raw({ type: 'application/json' }), webhookRouter)
+  .use('/webhook', express.raw({ type: 'application/json' }), webhookRouter)
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/users', usersRouter)
