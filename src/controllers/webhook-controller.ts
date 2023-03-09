@@ -4,8 +4,6 @@ import { Stripe } from 'stripe';
 import ticketService from '@/services/tickets-service';
 import paymentService, { CardPaymentParams } from '@/services/payments-service';
 export async function webhook(req: AuthenticatedRequest, res: Response) {
-  console.log('inside webhook');
-  console.log(req.body);
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -26,7 +24,6 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   let paymentIntent;
 
   try {
-    console.log(req.body);
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
