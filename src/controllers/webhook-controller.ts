@@ -6,6 +6,7 @@ import express from 'express';
 import ticketService from '@/services/tickets-service';
 import paymentService, { CardPaymentParams } from '@/services/payments-service';
 export async function webhook(req: AuthenticatedRequest, res: Response) {
+  console.log('inside webhook')
   interface PaymentIntent {
     id: string;
     amount_total: number;
@@ -27,6 +28,7 @@ export async function webhook(req: AuthenticatedRequest, res: Response) {
   let event;
   let paymentIntent;
   try {
+    console.log('inside try/catch')
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     paymentIntent = event.data.object as PaymentIntent;
   } catch (err) {
