@@ -26,7 +26,7 @@ async function getHotels(userId: number) {
 }
 
 async function getHotelsWithRooms(userId: number, hotelId: number) {
-  await listHotels(userId);
+  
   const hotel = await hotelRepository.findRoomsByHotelId(hotelId);
 
   if (!hotel) {
@@ -35,9 +35,15 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
   return hotel;
 }
 
+async function getHotelsWithRoomsWithoutId(userId: number){
+  const hotel = await hotelRepository.getHotelsWithRoomsWithoutId()
+  return hotel
+}
+
 const hotelService = {
   getHotels,
   getHotelsWithRooms,
+  getHotelsWithRoomsWithoutId
 };
 
 export default hotelService;
