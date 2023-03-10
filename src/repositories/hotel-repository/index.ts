@@ -1,7 +1,11 @@
 import { prisma } from "@/config";
 
 async function findHotels() {
-  return prisma.hotel.findMany();
+  return prisma.hotel.findMany({
+    include:{
+      Rooms: true
+    }
+  });
 }
 
 async function findRoomsByHotelId(hotelId: number) {
@@ -14,15 +18,9 @@ async function findRoomsByHotelId(hotelId: number) {
     }
   });
 }
-
-async function getHotelsWithRoomsWithoutId(){
-  return prisma.hotel.findMany()
-}
-
 const hotelRepository = {
   findHotels,
-  findRoomsByHotelId,
-  getHotelsWithRoomsWithoutId
+  findRoomsByHotelId
 };
 
 export default hotelRepository;
