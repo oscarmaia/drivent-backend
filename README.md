@@ -4,6 +4,10 @@ Back-end for Driven.t, an event management solution.
 
 :)
 
+## Use this API
+If you want to use this API, use this link below:<br>
+https://drivent-api.onrender.com
+
 ## About
 
 Driven.t is a web browser application with which you can manage every single aspect of your event.
