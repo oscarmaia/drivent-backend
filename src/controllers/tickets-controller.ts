@@ -1,13 +1,20 @@
-import { AuthenticatedRequest } from "@/middlewares";
-import ticketService from "@/services/tickets-service";
-import { Response } from "express";
-import httpStatus from "http-status";
+import { redis } from '@/app';
+import { AuthenticatedRequest } from '@/middlewares';
+import ticketService from '@/services/tickets-service';
+import { Response } from 'express';
+import httpStatus from 'http-status';
 
 export async function getTicketTypes(req: AuthenticatedRequest, res: Response) {
+  const cacheKey = 'ticketTypes';
   try {
-    const ticketTypes = await ticketService.getTicketTypes();
-
-    return res.status(httpStatus.OK).send(ticketTypes);
+    const cachedTickets = await redis.get(cacheKey);
+    if (cachedTickets) {
+      res.send(JSON.parse(cachedTickets));
+    } else {
+      const ticketTypes = await ticketService.getTicketTypes();
+      redis.set(cacheKey, JSON.stringify(ticketTypes));
+      return res.status(httpStatus.OK).send(ticketTypes);
+    }
   } catch (error) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
@@ -43,4 +50,3 @@ export async function createTicket(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
-

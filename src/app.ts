@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
-
+import { createClient } from 'redis';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
 
 loadEnv();
@@ -21,6 +21,14 @@ import {
 } from '@/routers';
 
 const app = express();
+
+export const redis = createClient({
+  url: process.env.REDIS_URL,
+});
+async function connectRedis() {
+  await redis.connect();
+}
+connectRedis();
 app
   .use(cors())
   .use('/webhook', express.raw({ type: 'application/json' }), webhookRouter)

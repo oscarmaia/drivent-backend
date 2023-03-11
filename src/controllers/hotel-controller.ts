@@ -38,14 +38,3 @@ export async function getHotelsWithRooms(req: AuthenticatedRequest, res: Respons
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
-
-export async function getHotelsWithRoomsWithoutId(req: AuthenticatedRequest, res: Response){
-  const { userId } = req;
-
-  try{
-    const hotels = await hotelService.getHotelsWithRoomsWithoutId(userId)
-    res.status(201).send(hotels)
-  }catch(err){
-    res.send(err)
-  }
-}
