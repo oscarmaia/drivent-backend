@@ -4,6 +4,10 @@ Back-end for Driven.t, an event management solution.
 
 :)
 
+## Use this API
+If you want to use this API, use this link below:<br>
+https://drivent-api.onrender.com
+
 ## About
 
 Driven.t is a web browser application with which you can manage every single aspect of your event.
@@ -12,7 +16,8 @@ Driven.t is a web browser application with which you can manage every single asp
 
 1. Clone this repository
 2. Install all dependencies
-
+2. You must have redis installed in your computer.
+https://redis.io/
 ```bash
 npm i
 ```
@@ -59,6 +64,15 @@ npm run test
 ```bash
 npm run test:docker
 ```
+
+## How to test Payments
+Use any of these test cards to `simulate a payment`.
+<br>
+<br>
+You can use <strong>any card name,any expiration date and cvc</strong>
+1. Payment succeeds: `4242 4242 4242 4242`
+2. Payment requires authentication: `4000 0025 0000 3155`
+3. Payment is declined: `4000 0000 0000 9995`
 
 ## Building and starting for production
 
@@ -114,6 +128,23 @@ npm run dev:postgres
 
 Add your postgres credentials and make sure to create given database before running the application.
 
+Create an account in stripe and go to this link to get your `Secret Key` for test purposes:
+https://dashboard.stripe.com/test/apikeys
+
+Set this key that looks like:
+```sk_test_51MgWxFISQE...tvc00PargztcX```
+
+
+Then to get your `Endpoint Secret` go to this link:
+
+
+https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local
+
+And follow the steps to get your `Endpoint Secret` to run stripe locally.
+Set this key that looks like:
+```whsec_84ed9acb8...9232fc81969b99426e5074```
+
+And click on 
 - Running application inside docker (postgres and node):
 
 Set `POSTGRES_HOST` to `drivent-postgres-development` for `.env.development` and `drivent-postgres-test` for `.env.test` file. It is the name of the postgres container inside docker-compose file. Docker Compose will start the postgres container for you, create the database and host alias for you.

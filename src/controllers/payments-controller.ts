@@ -50,7 +50,7 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
 
-    return res.status(httpStatus.OK).send(payment);
+    return res.send(payment).status(httpStatus.OK);
   } catch (error) {
     if (error.name === "UnauthorizedError") {
       return res.sendStatus(httpStatus.UNAUTHORIZED);
