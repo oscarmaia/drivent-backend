@@ -12,7 +12,8 @@ Driven.t is a web browser application with which you can manage every single asp
 
 1. Clone this repository
 2. Install all dependencies
-
+2. You must have redis installed in your computer.
+https://redis.io/
 ```bash
 npm i
 ```
@@ -114,6 +115,23 @@ npm run dev:postgres
 
 Add your postgres credentials and make sure to create given database before running the application.
 
+Create an account in stripe and go to this link to get your `Secret Key` for test purposes:
+https://dashboard.stripe.com/test/apikeys
+
+Set this key that looks like:
+```sk_test_51MgWxFISQE...tvc00PargztcX```
+
+
+Then to get your `Endpoint Secret` go to this link:
+
+
+https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local
+
+And follow the steps to get your `Endpoint Secret` to run stripe locally.
+Set this key that looks like:
+```whsec_84ed9acb8...9232fc81969b99426e5074```
+
+And click on 
 - Running application inside docker (postgres and node):
 
 Set `POSTGRES_HOST` to `drivent-postgres-development` for `.env.development` and `drivent-postgres-test` for `.env.test` file. It is the name of the postgres container inside docker-compose file. Docker Compose will start the postgres container for you, create the database and host alias for you.
