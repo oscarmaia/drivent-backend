@@ -61,6 +61,20 @@ npm run test
 npm run test:docker
 ```
 
+## How to test Payments
+Use any of these test cards to `simulate a payment`.
+<br>
+<br>
+You can use <strong>any card name,any expiration date and cvc</strong>
+1. Payment succeeds: `4242 4242 4242 4242`
+2. Payment requires authentication: `4000 0025 0000 3155`
+3. Payment is declined: `4000 0000 0000 9995`
+
+Any card name,
+Any expiration date ,
+Any cvc
+
+
 ## Building and starting for production
 
 ```bash
