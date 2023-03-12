@@ -56,27 +56,49 @@ async function main() {
     });
   }
 
+  type Rooms = {
+    name: string;
+    capacity: number;
+    hotelId: number;
+  };
+  let roomsData1: Rooms[] = [];
+
+  let roomsData2: Rooms[] = [];
+  let roomsData3: Rooms[] = [];
   let rooms;
+
+  for (let i = 1; i <= 16; i++) {
+    let data: Rooms;
+    data = {
+      name: (100 + i).toString(),
+      capacity: Math.floor(Math.random() * 3) + 1,
+      hotelId: 1,
+    };
+    roomsData1.push(data);
+  }
+
+  for (let i = 1; i <= 16; i++) {
+    let data = {
+      name: (100 + i).toString(),
+      capacity: Math.floor(Math.random() * 2) + 1,
+      hotelId: 2,
+    };
+    roomsData2.push(data);
+  }
+  for (let i = 1; i <= 16; i++) {
+    let data = {
+      name: (100 + i).toString(),
+      capacity: Math.floor(Math.random() * 1) + 1,
+      hotelId: 3,
+    };
+    roomsData3.push(data);
+  }
+  const mergedRooms = roomsData1.concat(roomsData2.concat(roomsData3));
+
   rooms = await prisma.room.findFirst();
   if (!rooms) {
     rooms = await prisma.room.createMany({
-      data: [
-        {
-          name: 'Single e Double',
-          capacity: 103,
-          hotelId: 1,
-        },
-        {
-          name: 'Single, Double e Triple',
-          capacity: 25,
-          hotelId: 2,
-        },
-        {
-          name: 'Single e Double',
-          capacity: 7,
-          hotelId: 3,
-        },
-      ],
+      data: mergedRooms,
     });
   }
 
