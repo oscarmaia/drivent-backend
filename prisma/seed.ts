@@ -30,41 +30,18 @@ async function main() {
         },
       ],
     });
-  }
-
-  let hotels;
-  hotels = await prisma.hotel.findFirst();
-  if (!hotels) {
-    hotels = await prisma.hotel.createMany({
-      data: [
-        {
-          name: 'Driven Resort',
-          image:
-            'https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_871,h_581/https://blog.hotelpontaverde.com.br/wp-content/uploads/2019/09/Resort-ou-Hotel-Hotel-Ponta-Verde-France%CC%82s.png',
-        },
-        {
-          name: 'Driven Palace',
-          image:
-            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/ac/91/83/facade-daylight.jpg?w=700&h=-1&s=1',
-        },
-
-        {
-          name: 'Driven World',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiCgJ5pckSYv1bj2CQKf6C7Jv8_7EbbvgAAw&usqp=CAU',
-        },
-      ],
-    });
-
-    let acitivities;
+  };
+  let acitivities
+  acitivities = await prisma.activity.findFirst();
     if (!acitivities) {
-      acitivities = prisma.activity.createMany({
+      acitivities = await prisma.activity.createMany({
         data: [
           {
             name: 'Mincecraft: montando o PC ideal',
             date: '03/04/2023',
             place: 'principal',
             startsAt: '0900',
-            finishesAt: '1000',
+            finishesAt: '1000'
           },
           {
             name: 'Lol: montando o PC ideal',
@@ -109,7 +86,7 @@ async function main() {
             finishesAt: '1000',
           },
           {
-            name: 'f1 2022: montando o PC ideal',
+            name: 'F1 2022: montando o PC ideal',
             date: '04/04/2023',
             place: 'principal',
             startsAt: '1000',
@@ -201,6 +178,29 @@ async function main() {
           },
         ],
       });
+
+  let hotels;
+  hotels = await prisma.hotel.findFirst();
+  if (!hotels) {
+    hotels = await prisma.hotel.createMany({
+      data: [
+        {
+          name: 'Driven Resort',
+          image:
+            'https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_871,h_581/https://blog.hotelpontaverde.com.br/wp-content/uploads/2019/09/Resort-ou-Hotel-Hotel-Ponta-Verde-France%CC%82s.png',
+        },
+        {
+          name: 'Driven Palace',
+          image:
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/ac/91/83/facade-daylight.jpg?w=700&h=-1&s=1',
+        },
+
+        {
+          name: 'Driven World',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiCgJ5pckSYv1bj2CQKf6C7Jv8_7EbbvgAAw&usqp=CAU',
+        },
+      ],
+    });
     }
   }
 
@@ -252,7 +252,6 @@ async function main() {
 
   console.log({ event });
   console.log({ createdTicketTypes });
-  console.log(hotels);
   console.log(rooms);
 }
 
