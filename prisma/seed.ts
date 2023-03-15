@@ -54,6 +54,154 @@ async function main() {
         },
       ],
     });
+
+    let acitivities;
+    if (!acitivities) {
+      acitivities = prisma.activity.createMany({
+        data: [
+          {
+            name: 'Mincecraft: montando o PC ideal',
+            date: '03/04/2023',
+            place: 'principal',
+            startsAt: '0900',
+            finishesAt: '1000',
+          },
+          {
+            name: 'Lol: montando o PC ideal',
+            date: '03/04/2023',
+            place: 'principal',
+            startsAt: '1000',
+            finishesAt: '1100',
+          },
+          {
+            name: 'Roblox, montando o PC ideal',
+            date: '03/04/2023',
+            place: 'principal',
+            startsAt: '1100',
+            finishesAt: '1200',
+          },
+          {
+            name: 'CS: montando o PC ideal',
+            date: '04/04/2023',
+            place: 'principal',
+            startsAt: '0900',
+            finishesAt: '1000',
+          },
+          {
+            name: 'The Last Of Us: montando o PC ideal',
+            date: '04/04/2023',
+            place: 'principal',
+            startsAt: '1000',
+            finishesAt: '1100',
+          },
+          {
+            name: 'Fifa: montando o PC ideal',
+            date: '04/04/2023',
+            place: 'principal',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Among Us: montando o PC ideal',
+            date: '04/04/2023',
+            place: 'principal',
+            startsAt: '0900',
+            finishesAt: '1000',
+          },
+          {
+            name: 'f1 2022: montando o PC ideal',
+            date: '04/04/2023',
+            place: 'principal',
+            startsAt: '1000',
+            finishesAt: '1100',
+          },
+          {
+            name: 'Palestra com José Valim',
+            date: '03/04/2023',
+            place: 'lateral',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Palestra com Dennis Ritchie',
+            date: '03/04/2023',
+            place: 'lateral',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Palestra com Linus Torvalds',
+            date: '04/04/2023',
+            place: 'lateral',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Palestra com Guido van Rossum',
+            date: '04/04/2023',
+            place: 'lateral',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Palestra com Bjarne Stroustrup',
+            date: '05/04/2023',
+            place: 'lateral',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Palestra com Tim Berners-Lee',
+            date: '05/04/2023',
+            place: 'lateral',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Workshop Python',
+            date: '03/04/2023',
+            place: 'workshop',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Workshop JavaScript',
+            date: '03/04/2023',
+            place: 'workshop',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Workshop Go',
+            date: '04/04/2023',
+            place: 'workshop',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Workshop Rust',
+            date: '04/04/2023',
+            place: 'workshop',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+          {
+            name: 'Workshop Ruby',
+            date: '05/04/2023',
+            place: 'workshop',
+            startsAt: '0900',
+            finishesAt: '1200',
+          },
+          {
+            name: 'Workshop Java',
+            date: '05/04/2023',
+            place: 'workshop',
+            startsAt: '1300',
+            finishesAt: '1500',
+          },
+        ],
+      });
+    }
   }
 
   type Rooms = {
