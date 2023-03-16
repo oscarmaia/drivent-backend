@@ -8,6 +8,7 @@ import eventsService from '../events-service';
 import { duplicatedEmailError } from './errors';
 
 export async function createUser({ email, password }: CreateUserParams): Promise<User> {
+  password = password.toString();
   await canEnrollOrFail();
 
   await validateUniqueEmailOrFail(email);
@@ -24,6 +25,10 @@ async function validateUniqueEmailOrFail(email: string) {
   if (userWithSameEmail) {
     throw duplicatedEmailError();
   }
+}
+
+async function getUserByEmail(email: string) {
+  return await userRepository.findByEmail(email);
 }
 
 async function canEnrollOrFail() {
@@ -72,6 +77,7 @@ const userService = {
   createUser,
   getAcessToken,
   fetchUser,
+  getUserByEmail,
 };
 
 export * from './errors';
