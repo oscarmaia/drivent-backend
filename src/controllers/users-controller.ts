@@ -1,6 +1,6 @@
-import userService from "@/services/users-service";
-import { Request, Response } from "express";
-import httpStatus from "http-status";
+import userService from '@/services/users-service';
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
 
 export async function usersPost(req: Request, res: Response) {
   const { email, password } = req.body;
@@ -12,9 +12,21 @@ export async function usersPost(req: Request, res: Response) {
       email: user.email,
     });
   } catch (error) {
-    if (error.name === "DuplicatedEmailError") {
+    if (error.name === 'DuplicatedEmailError') {
       return res.status(httpStatus.CONFLICT).send(error);
     }
     return res.status(httpStatus.BAD_REQUEST).send(error);
+  }
+}
+
+export async function loginWithGithub(req: Request, res: Response) {
+  const { code } = req.body;
+  try {
+    const token = await userService.getAcessToken(code);
+    const user = await userService.fetchUser(token);
+    console.log(user);
+    return res.status(httpStatus.OK).send(user);
+  } catch (error) {
+    return res.status(httpStatus.UNAUTHORIZED).send({});
   }
 }
