@@ -42,18 +42,18 @@ model Event {
 }
 
 model Enrollment {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(255)
-  cpf       String    @db.VarChar(255)
-  birthday  DateTime
-  phone     String    @db.VarChar(255)
-  userId    Int       @unique
-  User      User      @relation(fields: [userId], references: [id])
-  Address   Address[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Ticket    Ticket[]
-  EnrolmentActivity EnrolmentActivity[]
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(255)
+  cpf                String               @db.VarChar(255)
+  birthday           DateTime
+  phone              String               @db.VarChar(255)
+  userId             Int                  @unique
+  User               User                 @relation(fields: [userId], references: [id])
+  Address            Address[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  Ticket             Ticket[]
+  EnrollmentActivity EnrollmentActivity[]
 }
 
 model Address {
@@ -141,21 +141,21 @@ model Booking {
 }
 
 model Activity {
-   id        Int      @id @default(autoincrement())
-   name      String
-   date      String 
-   startsAt  String
-   finishesAt String
-   place      String
-   EnrolmentActivity EnrolmentActivity[]
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  date               String
+  startsAt           DateTime
+  endsAt             DateTime
+  place              String
+  EnrollmentActivity EnrollmentActivity[]
 }
 
-model EnrolmentActivity {
-  id            Int             @id @default(autoincrement())
-  enrollmentId  Int
-  Enrollment    Enrollment   @relation(fields: [enrollmentId], references: [id])
-  activityId    Int
-  Activity Activity        @relation(fields: [activityId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model EnrollmentActivity {
+  id           Int        @id @default(autoincrement())
+  enrollmentId Int
+  Enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+  activityId   Int
+  Activity     Activity   @relation(fields: [activityId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
