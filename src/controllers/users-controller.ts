@@ -24,7 +24,6 @@ export async function loginWithGithub(req: Request, res: Response) {
   try {
     const token = await userService.getAcessToken(code);
     const user = await userService.fetchUser(token);
-    console.log(user);
     return res.status(httpStatus.OK).send(user);
   } catch (error) {
     return res.status(httpStatus.UNAUTHORIZED).send({});
