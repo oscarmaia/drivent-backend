@@ -144,8 +144,8 @@ model Activity {
   id                 Int                  @id @default(autoincrement())
   name               String
   date               String
-  startsAt           DateTime
-  endsAt             DateTime
+  startsAt           String
+  finishesAt             String
   place              String
   EnrollmentActivity EnrollmentActivity[]
 }
