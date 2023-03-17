@@ -80,14 +80,14 @@ async function main() {
           },
           {
             name: 'Among Us: montando o PC ideal',
-            date: '04/04/2023',
+            date: '05/04/2023',
             place: 'principal',
             startsAt: '0900',
             finishesAt: '1000',
           },
           {
             name: 'F1 2022: montando o PC ideal',
-            date: '04/04/2023',
+            date: '05/04/2023',
             place: 'principal',
             startsAt: '1000',
             finishesAt: '1100',
