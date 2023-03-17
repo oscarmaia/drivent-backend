@@ -1,4 +1,4 @@
-import { prisma } from '@/config';
+import { prisma } from "@/config";
 
 async function getActivities() {
   return await prisma.activity.findMany();

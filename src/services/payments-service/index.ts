@@ -11,7 +11,7 @@ export async function paymentStripe(userId: number) {
     if (!ticket) {
       throw notFoundError();
     }
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2022-11-15" });
 
     const customer = await stripe.customers.create({
       metadata: {
@@ -33,7 +33,7 @@ export async function paymentStripe(userId: number) {
         },
       ],
       customer: customer.id,
-      mode: 'payment',
+      mode: "payment",
       success_url: `${process.env.CLIENT_URL}/dashboard/payment`,
       cancel_url: `${process.env.CLIENT_URL}/dashboard/payment`,
     });
