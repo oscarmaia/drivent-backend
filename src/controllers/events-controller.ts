@@ -1,10 +1,10 @@
-import { redis } from '@/app';
-import eventsService from '@/services/events-service';
-import { Request, Response } from 'express';
-import httpStatus from 'http-status';
+import { redis } from "@/app";
+import eventsService from "@/services/events-service";
+import { Request, Response } from "express";
+import httpStatus from "http-status";
 
 export async function getDefaultEvent(_req: Request, res: Response) {
-  const cacheKey = 'event';
+  const cacheKey = "event";
   try {
     const cachedEvent = await redis.get(cacheKey);
     if (cachedEvent) {

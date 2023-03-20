@@ -1,11 +1,11 @@
-import { redis } from '@/app';
-import { AuthenticatedRequest } from '@/middlewares';
-import ticketService from '@/services/tickets-service';
-import { Response } from 'express';
-import httpStatus from 'http-status';
+import { redis } from "@/app";
+import { AuthenticatedRequest } from "@/middlewares";
+import ticketService from "@/services/tickets-service";
+import { Response } from "express";
+import httpStatus from "http-status";
 
 export async function getTicketTypes(req: AuthenticatedRequest, res: Response) {
-  const cacheKey = 'ticketTypes';
+  const cacheKey = "ticketTypes";
   try {
     const cachedTickets = await redis.get(cacheKey);
     if (cachedTickets) {

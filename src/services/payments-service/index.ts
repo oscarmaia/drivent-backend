@@ -1,9 +1,9 @@
-import { notFoundError, unauthorizedError, requestError } from '@/errors';
-import paymentRepository, { PaymentParams } from '@/repositories/payment-repository';
-import ticketRepository from '@/repositories/ticket-repository';
-import enrollmentRepository from '@/repositories/enrollment-repository';
-import { Stripe } from 'stripe';
-import ticketService from '../tickets-service';
+import { notFoundError, unauthorizedError, requestError } from "@/errors";
+import paymentRepository, { PaymentParams } from "@/repositories/payment-repository";
+import ticketRepository from "@/repositories/ticket-repository";
+import enrollmentRepository from "@/repositories/enrollment-repository";
+import { Stripe } from "stripe";
+import ticketService from "../tickets-service";
 
 export async function paymentStripe(userId: number) {
   try {
@@ -11,7 +11,7 @@ export async function paymentStripe(userId: number) {
     if (!ticket) {
       throw notFoundError();
     }
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2022-11-15" });
 
     const customer = await stripe.customers.create({
       metadata: {
@@ -23,7 +23,7 @@ export async function paymentStripe(userId: number) {
       line_items: [
         {
           price_data: {
-            currency: 'brl',
+            currency: "brl",
             product_data: {
               name: ticket.TicketType.name,
             },
@@ -33,14 +33,14 @@ export async function paymentStripe(userId: number) {
         },
       ],
       customer: customer.id,
-      mode: 'payment',
+      mode: "payment",
       success_url: `${process.env.CLIENT_URL}/dashboard/payment`,
       cancel_url: `${process.env.CLIENT_URL}/dashboard/payment`,
     });
     if (session.url) {
       return session.url;
     } else {
-      return requestError(500, 'STRIPE ERROR');
+      return requestError(500, "STRIPE ERROR");
     }
   } catch (error) {
     console.log(error);
