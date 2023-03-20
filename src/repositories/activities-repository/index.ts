@@ -4,8 +4,44 @@ async function getActivities() {
   return await prisma.activity.findMany();
 }
 
+async function getActivitiesByUser( id:number ) {
+  return await prisma.enrolmentActivity.findMany({
+    where:{
+      enrollmentId:id
+    },
+    include:{
+      Activity:true
+    }
+  });
+}
+
+async function insertReservation(actID:number, enrollmentId:number) {
+  return await prisma.enrolmentActivity.create({
+    data:{
+      enrollmentId: enrollmentId,
+      activityId: actID
+    },
+    include: {
+      Activity:true
+    }
+  })
+}
+
+async function deleteReservation(id:number) {
+  console.log(id);
+  return await prisma.enrolmentActivity.delete({
+    where:{
+      id: id 
+    }
+
+  })
+}
+
 const activitiesRepository = {
   getActivities,
+  getActivitiesByUser,
+  insertReservation,
+  deleteReservation
 };
 
 export default activitiesRepository;
