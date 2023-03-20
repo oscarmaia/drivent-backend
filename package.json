@@ -93,6 +93,7 @@
     "jsonwebtoken": "^8.5.1",
     "redis": "^4.6.5",
     "reflect-metadata": "^0.1.13",
-    "stripe": "^11.13.0"
+    "stripe": "^11.13.0",
+    "query-string": "^7.1.1"
   }
 }

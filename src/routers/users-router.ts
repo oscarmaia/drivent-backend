@@ -2,10 +2,10 @@ import { Router } from "express";
 
 import { createUserSchema } from "@/schemas";
 import { validateBody } from "@/middlewares";
-import { usersPost } from "@/controllers";
+import { usersPost,loginWithGithub } from "@/controllers";
 
 const usersRouter = Router();
 
-usersRouter.post("/", validateBody(createUserSchema), usersPost);
+usersRouter.post("/", validateBody(createUserSchema), usersPost).post('/register/github',loginWithGithub);
 
 export { usersRouter };
