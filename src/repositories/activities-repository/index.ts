@@ -5,7 +5,7 @@ async function getActivities() {
 }
 
 async function getActivitiesByUser( id:number ) {
-  return await prisma.enrolmentActivity.findMany({
+  return await prisma.enrollmentActivity.findMany({
     where:{
       enrollmentId:id
     },
@@ -16,7 +16,7 @@ async function getActivitiesByUser( id:number ) {
 }
 
 async function insertReservation(actID:number, enrollmentId:number) {
-  return await prisma.enrolmentActivity.create({
+  return await prisma.enrollmentActivity.create({
     data:{
       enrollmentId: enrollmentId,
       activityId: actID
@@ -29,7 +29,7 @@ async function insertReservation(actID:number, enrollmentId:number) {
 
 async function deleteReservation(id:number) {
   console.log(id);
-  return await prisma.enrolmentActivity.delete({
+  return await prisma.enrollmentActivity.delete({
     where:{
       id: id 
     }
