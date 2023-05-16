@@ -43,7 +43,7 @@ async function getAcessToken(code: string) {
   const params = {
     code,
     grant_type: 'authorization_code',
-    redirect_uri: CLIENT_URL,
+    redirect_uri: `${CLIENT_URL}/enroll`,
     client_id: GITHUB_CLIENT_ID,
     client_secret: GITHUB_CLIENT_SECRET,
   };
