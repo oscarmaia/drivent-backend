@@ -8,6 +8,9 @@ Back-end for Driven.t, an event management solution.
 If you want to use this API, use this link below:<br>
 https://drivent-api.onrender.com
 
+## If you want the Front-end Repo, check this out!
+https://github.com/oscarmaia/drivent-frontend
+
 ## About
 
 Driven.t is a web browser application with which you can manage every single aspect of your event.
